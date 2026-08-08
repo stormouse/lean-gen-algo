@@ -1,0 +1,6 @@
+name = "gen-algo"
+version = "0.1.0"
+defaultTargets = ["LC22Assignment"]
+
+[[lean_lib]]
+name = "LC22Assignment"

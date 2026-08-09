@@ -3,16 +3,8 @@ import LC3302Assignment.Student
 
 namespace LC3302.Grader
 
-def noValidSolution (a b : List Char) : Prop :=
-  ∀ i : List Nat, ¬ (
-    monotonicIncreasing i ∧
-    match subsequenceByIndex a i with
-    | none => False
-    | some s => almostEqual s b)
-
-
 theorem no_output_iff_no_solution (a b : List Char) :
-    (noValidSolution a b ↔ LC3302.Student.findValidSequence a b = none) := by
+    (LC3302.noValidSolution a b ↔ LC3302.Student.findValidSequence a b = none) := by
   exact LC3302.Student.no_output_iff_no_solution a b
 
 

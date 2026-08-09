@@ -17,7 +17,7 @@ def almostEqual (a b : List Char) : Prop :=
 
 
 def subsequenceByIndex (s : List Char) (indices : List Nat) : Option (List Char) :=
-  indices.filterMap fun i => s[i]?
+  indices.mapM fun i => s[i]?
 
 
 def monotonicIncreasing (a : List Nat) : Prop :=
@@ -35,5 +35,11 @@ def isValidSolution (a b : List Char) (indices : List Nat) : Prop :=
     match subsequenceByIndex a indices with
     | none => False
     | some s => almostEqual s b
+
+
+def noValidSolution (a b : List Char) : Prop :=
+  ∀ indices : List Nat,
+    ¬ isValidSolution a b indices
+
 
 end LC3302

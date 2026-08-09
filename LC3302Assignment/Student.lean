@@ -109,24 +109,10 @@ theorem almostEqual_iff_matchesWith (s t : List Char) :
     almostEqual s t ↔ matchesWith s t 1 := by
   unfold almostEqual matchesWith
   constructor
-  · intro h
-    rcases h with heq | ⟨hl, hc⟩
-    · subst heq
-      refine ⟨rfl, ?_⟩
-      -- countDiff s s rfl = 0
-      have : ∀ (s : List Char) (h : s.length = s.length), countDiff s s h = 0 := by
-        intro s
-        induction s with
-        | nil => intro h; unfold countDiff; rfl
-        | cons x xs ih =>
-            intro h
-            unfold countDiff
-            rw [if_pos rfl]
-            exact ih _
-      rw [this]; exact Nat.zero_le _
-    · exact ⟨hl, hc⟩
   · intro ⟨hl, hc⟩
-    exact Or.inr ⟨hl, hc⟩
+    exact ⟨hl, hc⟩
+  · intro ⟨hl, hc⟩
+    exact ⟨hl, hc⟩
 
 /-- monotonicIncreasing helper: adding a smaller element preserves it. -/
 theorem monotonicIncreasing_cons {x : Nat} {xs : List Nat}
@@ -660,7 +646,7 @@ theorem no_output_iff_no_solution (a b : List Char) :
           rw [this]
           exact hae
 
-theorem output_is_valid_solution (a b : List Char) :
+theorem output_is_valid_solution (a b : List Char) {indices : List Nat} :
     (findValidSequence a b = some indices) → isValidSolution a b indices := by
   intro hres
   unfold findValidSequence at hres

@@ -12,8 +12,7 @@ def countDiff (a b : List Char)
 
 
 def almostEqual (a b : List Char) : Prop :=
-  a = b ∨
-    ∃ h : a.length = b.length, countDiff a b h ≤ 1
+  ∃ h : a.length = b.length, countDiff a b h ≤ 1
 
 
 def subsequenceByIndex (s : List Char) (indices : List Nat) : Option (List Char) :=

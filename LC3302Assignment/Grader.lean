@@ -8,7 +8,7 @@ theorem no_output_iff_no_solution (a b : List Char) :
   exact LC3302.Student.no_output_iff_no_solution a b
 
 
-theorem output_is_valid_solution (a b : List Char) :
+theorem output_is_valid_solution (a b : List Char) (indices : List Nat) :
     (LC3302.Student.findValidSequence a b = some indices) → isValidSolution a b indices := by
   exact LC3302.Student.output_is_valid_solution a b
 

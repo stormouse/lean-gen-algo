@@ -3,14 +3,14 @@ namespace LC2996.Student
 
 open LC2996
 
-def smallestMissingNatGtSequentialPrefixSum (a : List Nat) : Nat :=
+def smallestMissingNatGeSequentialPrefixSum (a : List Nat) : Nat :=
   sorry
 
 
 theorem solution_is_valid (a : List Nat) :
     let prefixSum := (longestSequentialPrefix a).sum
-    let result := smallestMissingNatGtSequentialPrefixSum a
-    result > prefixSum ∧ ∀ x : Nat, x > prefixSum → x ≥ result := by
+    let result := smallestMissingNatGeSequentialPrefixSum a
+    (result ≥ prefixSum ∧ result ∉ a) → ∀ x : Nat, (x ≥ prefixSum ∧ x ∉ a) → x ≥ result := by
   sorry
 
 end LC2996.Student

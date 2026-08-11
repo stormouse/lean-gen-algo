@@ -4,15 +4,11 @@ namespace Anon1.Student
 
 open Anon1
 
-def existsGeOddSequence (t : List Nat) : Bool :=
+def solve (t : List Nat) : Bool :=
   sorry
 
-
-theorem existsGeOddSequence_correctness (t : List Nat) :
-    existsGeOddSequence t = true ↔
-      ∃ s : List Bool, ∃ h : t.length = s.length,
-        sumOddPositions (buildHeadAndTailSequence t s h) ≥
-        sumEvenPositions (buildHeadAndTailSequence t s h) := by
+theorem solution_is_valid (t : List Nat) :
+    solve t = true ↔ targetProperty t := by
   sorry
 
 end Anon1.Student

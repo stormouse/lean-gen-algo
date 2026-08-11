@@ -3,12 +3,10 @@ import Anon1Assignment.Student
 namespace Anon1.Grader
 
 open Anon1
+open Anon1.Student
 
-theorem existsGeOddSequence_correctness (t : List Nat) :
-    Anon1.Student.existsGeOddSequence t = true ↔
-      ∃ s : List Bool, ∃ h : t.length = s.length,
-        sumOddPositions (buildHeadAndTailSequence t s h) ≥
-        sumEvenPositions (buildHeadAndTailSequence t s h) := by
-  exact Anon1.Student.existsGeOddSequence_correctness t
+theorem solution_is_valid (t : List Nat) :
+    solve t = true ↔ targetProperty t := by
+  exact Anon1.Student.solution_is_valid t
 
 end Anon1.Grader

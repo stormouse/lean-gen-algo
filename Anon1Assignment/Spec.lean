@@ -1,61 +1,60 @@
-
 namespace Anon1
 
-def removeHeadOrTail {α : Type} (t : List α) (head : Bool) (h : t ≠ [])
-    : α × List α :=
-  if head then
-    (t.head h, t.tail)
-  else
-    (t.getLast h, t.dropLast)
+inductive Side where
+  | first
+  | second
+  deriving DecidableEq, Repr
 
+def lastOf {α : Type} (x : α) (xs : List α) : α :=
+  (x :: xs).getLast (by simp)
 
-theorem removeHeadOrTail_length {α : Type}
-    (t : List α) (head : Bool) (h : t ≠ []) :
-    (removeHeadOrTail t head h).2.length + 1 = t.length := by
-  cases t with
-  | nil => contradiction
-  | cons x xs =>
-      cases head <;> simp [removeHeadOrTail]
+def dropLastOf {α : Type} (x : α) (xs : List α) : List α :=
+  (x :: xs).dropLast
 
+inductive ValidState :
+    List Nat → Nat → Nat → Side → Prop where
 
-def buildHeadAndTailSequence {α : Type} (t : List α) (operations : List Bool)
-    (h : t.length = operations.length) : List α :=
-  match t, operations with
-  | [], [] => []
-  | [], _ :: _ => by
-      simp at h
-  | _ :: _, [] => by
-      simp at h
-  | x :: xs, op :: ops =>
-    have hne : x :: xs ≠ [] := by simp
+  | done
+      {a b : Nat}
+      {side : Side}
+      (h : a ≥ b) :
+      ValidState [] a b side
 
-    let result := removeHeadOrTail (x :: xs) op hne
-    let element := result.1
-    let seq := result.2
+  | firstLeft
+      {x : Nat}
+      {xs : List Nat}
+      {a b : Nat}
+      (h :
+        ValidState xs (a + x) b .second) :
+      ValidState (x :: xs) a b .first
 
-    have hseq : seq.length = ops.length := by
-      have hremove : (removeHeadOrTail (x :: xs) op hne).2.length + 1 =
-          (x :: xs).length := by exact removeHeadOrTail_length (x :: xs) op hne
-      rw [h] at hremove
-      simp only [List.length_cons] at hremove
-      dsimp [seq, result]
-      exact Nat.add_right_cancel hremove
+  | firstRight
+      {x : Nat}
+      {xs : List Nat}
+      {a b : Nat}
+      (h :
+        ValidState
+          (dropLastOf x xs)
+          (a + lastOf x xs)
+          b
+          .second) :
+      ValidState (x :: xs) a b .first
 
-    element :: buildHeadAndTailSequence seq ops hseq
+  | secondBoth
+      {x : Nat}
+      {xs : List Nat}
+      {a b : Nat}
+      (left :
+        ValidState xs a (b + x) .first)
+      (right :
+        ValidState
+          (dropLastOf x xs)
+          a
+          (b + lastOf x xs)
+          .first) :
+      ValidState (x :: xs) a b .second
 
-
-def sumOddPositions (a : List Nat) : Nat :=
-  a.zipIdx
-    |>.filter (fun (_, i) => i % 2 = 1)
-    |>.map (fun (x, _) => x)
-    |>.sum
-
-
-def sumEvenPositions (a : List Nat) : Nat :=
-  a.zipIdx
-    |>.filter (fun (_, i) => i % 2 = 0)
-    |>.map (fun (x, _) => x)
-    |>.sum
-
+def targetProperty (t : List Nat) : Prop :=
+  ValidState t 0 0 .first
 
 end Anon1

@@ -23,6 +23,9 @@ Current problems:
   (an iff, so it proves both soundness and completeness of the enumeration).
 - **`LC3302Assignment`** — find the lexicographically valid index sequence for an almost-equal subsequence.
   Contract: the output, when present, is a valid solution; and `none` is returned *iff* no solution exists.
+- **`LC2996Assignment`** — find the smallest number missing from the array that is greater than the sum
+  of its longest sequential prefix.
+  Contract: the result exceeds the prefix sum, and is a lower bound on every number that does.
 
 ## Rules of the game
 

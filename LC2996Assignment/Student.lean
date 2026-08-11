@@ -76,8 +76,10 @@ theorem solution_is_candidate (a : List Nat) :
 theorem solution_is_valid (a : List Nat) :
     let prefixSum := (longestSequentialPrefix a).sum
     let result := smallestMissingNatGeSequentialPrefixSum a
-    (result ≥ prefixSum ∧ result ∉ a) → ∀ x : Nat, (x ≥ prefixSum ∧ x ∉ a) → x ≥ result := by
-  intro prefixSum result _ x hx
+    (result ≥ prefixSum ∧ result ∉ a) ∧ ∀ x : Nat, (x ≥ prefixSum ∧ x ∉ a) → x ≥ result := by
+  intro prefixSum result
+  refine ⟨solution_is_candidate a, ?_⟩
+  intro x hx
   exact search_le a prefixSum x hx.1 hx.2
 
 end LC2996.Student

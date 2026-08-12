@@ -8,7 +8,8 @@ If the proof compiles, the solution is correct — no test cases, no eyeballing.
 
 ## Layout
 
-Each problem is a Lean library named after its LeetCode number, split into three files:
+Each problem is a Lean library — named after its LeetCode number, or `AnonN` when the problem was
+handed over anonymously — split into three files:
 
 | File | Author | Purpose |
 | --- | --- | --- |
@@ -26,6 +27,26 @@ Current problems:
 - **`LC2996Assignment`** — find the smallest number missing from the array that is greater than the sum
   of its longest sequential prefix.
   Contract: the result exceeds the prefix sum, and is a lower bound on every number that does.
+- **`Anon1Assignment`** — an *anonymous* problem: the spec is a bare inductive `ValidState` relation on
+  `List Nat → Nat → Nat → Side`, with no prose and no problem name.
+  Contract: `solve t = true ↔ targetProperty t`, i.e. the decision procedure agrees with the relation
+  in both directions.
+  <details><summary>Spoiler: what it really is</summary>
+  LeetCode 486, *Predict the Winner*. The inductive relation encodes the two-player game where each
+  player takes a number from either end of the list; `targetProperty` says the first player can force
+  a score at least as large as the second player's. Opus 5 solved it by computing the game value
+  with a minimax recursion and proving that value characterizes the relation.
+  </details>
+- **`Anon2Assignment`** — another *anonymous* problem: return a longest contiguous sublist in which no
+  element occurs more than `k` times.
+  Contract: the returned list is good, is a sublist of the input, and is at least as long as every
+  other list satisfying both — so it is optimal, not merely feasible.
+  <details><summary>Spoiler: what it really is</summary>
+  LeetCode 2958, *Length of Longest Subarray With at Most K Frequency*. The stated version asks only
+  for the length; the spec here demands the witness itself. Opus 5 recognized the problem, then
+  discharged the contract by enumerating every contiguous sublist rather than using the sliding
+  window — the spec constrains correctness, not complexity.
+  </details>
 
 ## Rules of the game
 
@@ -34,6 +55,8 @@ Current problems:
   `exact`-ing something from `Student`, so the spec cannot be weakened.
 - `#print axioms` must show only the standard axioms — no `sorryAx`.
 - Some problems require not falling back to enumerating the entire solution space.
+- The `AnonN` problems are given without a name or a link, to see whether the agent recognizes the
+  problem from the formal spec alone and whether that changes how it attacks the proof.
 
 ## Building
 

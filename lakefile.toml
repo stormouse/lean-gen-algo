@@ -1,6 +1,6 @@
 name = "gen-algo"
 version = "0.1.0"
-defaultTargets = ["Anon1Assignment"]
+defaultTargets = ["Anon2Assignment"]
 
 [[lean_lib]]
 name = "LC22Assignment"
@@ -13,3 +13,6 @@ name = "LC2996Assignment"
 
 [[lean_lib]]
 name = "Anon1Assignment"
+
+[[lean_lib]]
+name = "Anon2Assignment"

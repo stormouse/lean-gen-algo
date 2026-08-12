@@ -10,4 +10,6 @@ theorem solution_is_valid (a : List Nat) (k : Nat) :
       ∀ alt, (isGood alt k ∧ isSub a alt) → alt.length ≤ sol.length := by
   exact Anon2.Student.solution_is_valid a k
 
+#print axioms solution_is_valid
+
 end Anon2.Grader

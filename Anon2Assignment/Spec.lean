@@ -12,8 +12,8 @@ namespace Anon2
   A subarray is a contiguous non-empty sequence of elements within an array.
 -/
 
-def isGood (a s : List Nat) (k : Nat) : Prop :=
-  ∀ x : Nat, x ∈ s → a.count x ≤ k
+def isGood (s : List Nat) (k : Nat) : Prop :=
+  ∀ x : Nat, x ∈ s → s.count x ≤ k
 
 def isSub (a s : List Nat) : Prop :=
   ∃ pre suf, a = pre ++ s ++ suf

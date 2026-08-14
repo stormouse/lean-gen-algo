@@ -14,4 +14,6 @@ theorem solution_is_correct
       runBaseline m k ops := by
   exact Anon3.Student.solution_is_correct m k hm hk ops
 
+#print axioms solution_is_correct
+
 end Anon3.Grader

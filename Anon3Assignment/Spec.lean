@@ -17,16 +17,36 @@ def expectedAverage (stream : List Nat) (m k : Nat) : Int :=
     let middle := (sorted.drop k).take (m - 2 * k)
     Int.ofNat (middle.sum / (m - 2 * k))
 
-def run
+def runBaseline
     (m k : Nat)
     (ops : List Op)
     (stream : List Nat := []) : List Int :=
   match ops with
   | [] => []
   | .add n :: rest =>
-      run m k rest (stream ++ [n])
+      runBaseline m k rest (stream ++ [n])
   | .calc :: rest =>
       expectedAverage stream m k ::
-        run m k rest stream
+        runBaseline m k rest stream
+
+structure MKImplementation where
+  State : Type
+  init : Nat → Nat → State
+  addElement : State → Nat → State
+  calculateMKAverage : State → Int
+
+def runImplementation
+    (impl : MKImplementation)
+    (m k : Nat)
+    (ops : List Op) : List Int :=
+  go (impl.init m k) ops
+where
+  go (state : impl.State) : List Op → List Int
+    | [] => []
+    | .add x :: rest =>
+        go (impl.addElement state x) rest
+    | .calc :: rest =>
+        impl.calculateMKAverage state ::
+          go state rest
 
 end Anon3

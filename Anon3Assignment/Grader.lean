@@ -3,25 +3,15 @@ import Anon3Assignment.Student
 
 namespace Anon3.Grader
 
-def runSolution
-    (m k : Nat)
-    (ops : List Anon3.Op) : List Int :=
-  go (Anon3.Student.init m k) ops
-where
-  go (state : Anon3.Student.State) : List Anon3.Op → List Int
-    | [] => []
-    | .add n :: rest =>
-        go (Anon3.Student.addElement state n) rest
-    | .calc :: rest =>
-        Anon3.Student.calculateMKAverage state ::
-          go state rest
+open Anon3
 
 theorem solution_is_correct
     (m k : Nat)
     (hm : 3 ≤ m)
     (hk : 2 * k < m)
     (ops : List Op) :
-    runSolution m k ops = run m k ops := by
-  sorry
+    runImplementation Anon3.Student.implementation m k ops =
+      runBaseline m k ops := by
+  exact Anon3.Student.solution_is_correct m k hm hk ops
 
 end Anon3.Grader

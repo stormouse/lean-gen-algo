@@ -8,7 +8,7 @@ inductive Segment where
 
 def isContiguous (s : Segment) (l r : Nat) (a : List Segment) : Bool :=
   a |>.drop l
-    |>.take (a.length - l - r)
+    |>.take (r - l + 1)
     |>.all (fun x => x == s)
 
 
@@ -36,7 +36,10 @@ def flipFlap (l₁ r₁ l₂ r₂ : Nat) (a : List Segment) : List Segment :=
 
 
 def isValidFlipFlap (l₁ r₁ l₂ r₂ : Nat) (a : List Segment) : Bool :=
-  isContiguousActive l₁ r₁ a && isContiguousInactive l₂ r₂ (flip l₁ r₁ a)
+  l₁ ≤ r₂
+    && l₂ ≤ r₂
+    && isContiguousActive l₁ r₁ a
+    && isContiguousInactive l₂ r₂ (flip l₁ r₁ a)
 
 
 def runOperation (l₁ r₁ l₂ r₂ : Nat) (a : List Segment) : Option (List Segment) :=
@@ -45,13 +48,12 @@ def runOperation (l₁ r₁ l₂ r₂ : Nat) (a : List Segment) : Option (List S
   else
     none
 
-
-def score (l r : Nat) (a : List Segment) : Nat :=
+def score (a : List Segment) : Nat :=
     let rec go (xs : List Segment) (currStreak maxStreak : Nat) : Nat :=
     match xs with
     | [] => max currStreak maxStreak
     | Segment.Active :: rest => go rest (currStreak + 1) (max (currStreak + 1) maxStreak)
     | _ :: rest => go rest 0 maxStreak
-  go ((a.drop l).take (a.length - l - r))  0 0
+  go a 0 0
 
 end Anon4

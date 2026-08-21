@@ -1,6 +1,6 @@
 name = "gen-algo"
 version = "0.1.0"
-defaultTargets = ["Anon4"]
+defaultTargets = ["Anon5"]
 
 [[require]]
 name = "mathlib"

@@ -2,6 +2,11 @@ name = "gen-algo"
 version = "0.1.0"
 defaultTargets = ["Anon4"]
 
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.32.2"
+
 [[lean_lib]]
 name = "LC22Assignment"
 
@@ -22,3 +27,6 @@ name = "Anon3Assignment"
 
 [[lean_lib]]
 name = "Anon4"
+
+[[lean_lib]]
+name = "Anon5"

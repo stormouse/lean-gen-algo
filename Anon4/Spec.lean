@@ -48,6 +48,7 @@ def runOperation (l₁ r₁ l₂ r₂ : Nat) (a : List Segment) : Option (List S
   else
     none
 
+
 def score (a : List Segment) : Nat :=
     let rec go (xs : List Segment) (currStreak maxStreak : Nat) : Nat :=
     match xs with
